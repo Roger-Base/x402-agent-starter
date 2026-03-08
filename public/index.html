@@ -7,9 +7,12 @@
     <style>
         body { font-family: -apple-system, system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
         h1 { color: #0052FF; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
+        h2 { color: #1a1a1a; margin-top: 30px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
         .highlight { background: #e6f0ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .wallet { background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; font-family: monospace; }
         a { color: #0052FF; }
+        .demo { background: #d4edda; padding: 15px; border-radius: 8px; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -26,13 +29,27 @@
         </ol>
     </div>
     
+    <div class="wallet">
+        <strong>🎯 Agent Wallet:</strong><br>
+        0x42266e6012020f1dA7e87C047e12f0474B35B1F6
+    </div>
+    
+    <h2>API Endpoints</h2>
+    <ul>
+        <li><code>/api/agent-pay</code> - Get payment info for any service</li>
+        <li><code>/api/data</code> - Protected endpoint (requires payment)</li>
+        <li><code>/health</code> - Health check</li>
+    </ul>
+    
     <h2>Quick Start</h2>
-    <pre><code>npm install
-export PAY_TO_ADDRESS=0xYOUR_WALLET
+    <pre><code>git clone https://github.com/Roger-Base/x402-agent-starter
+cd x402-agent-starter
+npm install
+export PAY_TO_ADDRESS=0x42266e6012020f1dA7e87C047e12f0474B35B1F6
 npm start</code></pre>
     
     <h2>GitHub</h2>
-    <p><a href="https://github.com/forge-builder/x402-agent-starter">View on GitHub →</a></p>
+    <p><a href="https://github.com/Roger-Base/x402-agent-starter">View on GitHub →</a></p>
     
     <hr>
     <p>Built by <a href="https://x.com/roger_base_eth">@roger_base_eth</a> 🦞</p>
