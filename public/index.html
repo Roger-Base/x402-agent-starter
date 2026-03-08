@@ -5,51 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>x402 Agent Starter | AI Agent Payments on Base</title>
     <style>
-        body { font-family: -apple-system, system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
+        body { font-family: -apple-system, system-ui, sans-serif; max-width: 700px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
         h1 { color: #0052FF; }
         h2 { color: #1a1a1a; margin-top: 30px; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
         .highlight { background: #e6f0ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
-        .wallet { background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; font-family: monospace; }
+        .wallet { background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; font-family: monospace; word-break: break-all; }
+        .status { padding: 10px; border-radius: 8px; margin: 10px 0; }
+        .status-working { background: #d4edda; }
+        .status-demo { background: #fff3cd; }
         a { color: #0052FF; }
-        .demo { background: #d4edda; padding: 15px; border-radius: 8px; margin: 20px 0; }
     </style>
 </head>
 <body>
     <h1>🧡 x402 Agent Starter</h1>
-    <p>Minimal Node.js starter for AI agents to accept x402 payments on Base (USDC).</p>
+    <p>Minimal starter for AI agents to accept USDC payments on Base.</p>
     
-    <div class="highlight">
-        <h2>How It Works</h2>
-        <ol>
-            <li>Client makes HTTP request to your API</li>
-            <li>Server returns <code>402 Payment Required</code> with x402 headers</li>
-            <li>Client pays via Base chain</li>
-            <li>Server verifies and returns data</li>
-        </ol>
+    <div class="status status-demo">
+        <strong>⚠️ Status: Demo</strong><br>
+        This is a template. Deploy your own instance to accept payments.
     </div>
     
+    <h2>How It Works</h2>
+    <ol>
+        <li>Deploy this template to Railway/Render</li>
+        <li>Set your wallet address in environment</li>
+        <li>Agents call your API and pay in USDC</li>
+    </ol>
+    
     <div class="wallet">
-        <strong>🎯 Agent Wallet:</strong><br>
+        <strong>🎯 Demo Wallet (not active):</strong><br>
         0x42266e6012020f1dA7e87C047e12f0474B35B1F6
     </div>
     
-    <h2>API Endpoints</h2>
-    <ul>
-        <li><code>/api/agent-pay</code> - Get payment info for any service</li>
-        <li><code>/api/data</code> - Protected endpoint (requires payment)</li>
-        <li><code>/health</code> - Health check</li>
-    </ul>
-    
-    <h2>Quick Start</h2>
-    <pre><code>git clone https://github.com/Roger-Base/x402-agent-starter
+    <h2>Quick Deploy</h2>
+    <pre><code># Clone
+git clone https://github.com/Roger-Base/x402-agent-starter
 cd x402-agent-starter
-npm install
-export PAY_TO_ADDRESS=0x42266e6012020f1dA7e87C047e12f0474B35B1F6
+
+# Deploy to Railway
+railway init
+railway up
+
+# Or set your wallet
+export PAY_TO_ADDRESS=0xYOUR_WALLET
 npm start</code></pre>
     
+    <h2>Demo API (local)</h2>
+    <p>Running locally returns payment info:</p>
+    <pre><code>curl "localhost:3010/api/agent-pay?service=test&amount=0.01"</code></pre>
+    
     <h2>GitHub</h2>
-    <p><a href="https://github.com/Roger-Base/x402-agent-starter">View on GitHub →</a></p>
+    <p><a href="https://github.com/Roger-Base/x402-agent-starter">View Source →</a></p>
     
     <hr>
     <p>Built by <a href="https://x.com/roger_base_eth">@roger_base_eth</a> 🦞</p>
