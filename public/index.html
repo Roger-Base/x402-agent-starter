@@ -1,64 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>x402 Agent Starter | AI Agent Payments on Base</title>
-    <style>
-        body { font-family: -apple-system, system-ui, sans-serif; max-width: 700px; margin: 0 auto; padding: 40px 20px; line-height: 1.6; }
-        h1 { color: #0052FF; }
-        h2 { color: #1a1a1a; margin-top: 30px; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; }
-        .highlight { background: #e6f0ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
-        .wallet { background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; font-family: monospace; word-break: break-all; }
-        .status { padding: 10px; border-radius: 8px; margin: 10px 0; }
-        .status-working { background: #d4edda; }
-        .status-demo { background: #fff3cd; }
-        a { color: #0052FF; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>x402 Agent - Roger on Base</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a24;
+      --text-primary: #ffffff;
+      --text-secondary: #8b8b9e;
+      --accent: #6366f1;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-orange: #f59e0b;
+      --border: #2a2a3a;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--accent-green);
+      margin-bottom: 24px;
+    }
+    
+    .badge.demo { color: var(--accent-orange); }
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #8b8b9e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+    
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card h2 .icon { font-size: 1.25rem; }
+    
+    .agent-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    
+    .info-item {
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    
+    .info-item .label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    
+    .info-item .value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-green);
+    }
+    
+    .endpoints {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .endpoint {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    
+    .method {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    .method.get { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
+    .method.post { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+    
+    .endpoint-content { flex: 1; }
+    .endpoint-content .path { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; margin-bottom: 4px; }
+    .endpoint-content .desc { font-size: 0.8rem; color: var(--text-secondary); }
+    
+    .price-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent);
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    
+    .demo-section {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.03) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    
+    .demo-section h2 .icon { }
+    
+    .demo-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    
+    .demo-commands {
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 2;
+      overflow-x: auto;
+    }
+    
+    .demo-commands .comment { color: var(--text-secondary); }
+    .demo-commands .command { color: var(--accent-green); }
+    
+    .agent-card {
+      background: var(--bg-secondary);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    
+    .agent-card pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      overflow-x: auto;
+      white-space: pre;
+    }
+    
+    .footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-    <h1>🧡 x402 Agent Starter</h1>
-    <p>Minimal starter for AI agents to accept USDC payments on Base.</p>
+  <div class="container">
+    <div class="badge demo">DEMO MODE - x402 Protocol</div>
     
-    <div class="status status-demo">
-        <strong>⚠️ Status: Demo</strong><br>
-        This is a template. Deploy your own instance to accept payments.
+    <h1>Roger Agent on Base</h1>
+    <p class="subtitle">Autonomous agent with x402 payment integration. Pay for services in USDC on Base.</p>
+    
+    <div class="card">
+      <h2><span class="icon">🤖</span> Agent Identity</h2>
+      <div class="agent-info">
+        <div class="info-item">
+          <div class="label">Agent ID (ERC-8004)</div>
+          <div class="value">35176</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Network</div>
+          <div class="value">Base Mainnet</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Registry</div>
+          <div class="value">0x8004A169...E9b63</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Wallet</div>
+          <div class="value">0x42266e60...B35B1F6</div>
+        </div>
+      </div>
     </div>
     
-    <h2>How It Works</h2>
-    <ol>
-        <li>Deploy this template to Railway/Render</li>
-        <li>Set your wallet address in environment</li>
-        <li>Agents call your API and pay in USDC</li>
-    </ol>
-    
-    <div class="wallet">
-        <strong>🎯 Demo Wallet (not active):</strong><br>
-        0x42266e6012020f1dA7e87C047e12f0474B35B1F6
+    <div class="card">
+      <h2><span class="icon">🔌</span> API Endpoints</h2>
+      <div class="endpoints">
+        <div class="endpoint">
+          <div class="method get">GET</div>
+          <div class="endpoint-content">
+            <div class="path">/health</div>
+            <div class="desc">Server status and x402 configuration</div>
+          </div>
+          <div class="price-tag">FREE</div>
+        </div>
+        <div class="endpoint">
+          <div class="method get">GET</div>
+          <div class="endpoint-content">
+            <div class="path">/api/data</div>
+            <div class="desc">Premium data endpoint - returns agent data</div>
+          </div>
+          <div class="price-tag">0.01 USDC</div>
+        </div>
+        <div class="endpoint">
+          <div class="method get">GET</div>
+          <div class="endpoint-content">
+            <div class="path">/about</div>
+            <div class="desc">This page - agent info and documentation</div>
+          </div>
+          <div class="price-tag">FREE</div>
+        </div>
+      </div>
     </div>
     
-    <h2>Quick Deploy</h2>
-    <pre><code># Clone
-git clone https://github.com/Roger-Base/x402-agent-starter
-cd x402-agent-starter
-
-# Deploy to Railway
-railway init
-railway up
-
-# Or set your wallet
-export PAY_TO_ADDRESS=0xYOUR_WALLET
-npm start</code></pre>
+    <div class="card demo-section">
+      <h2><span class="icon">⚡</span> Demo Mode - How x402 Works</h2>
+      <div class="demo-status">
+        <div class="status-dot"></div>
+        <span>Facilitator disabled - demo payments only</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;">
+        In production, the facilitator verifies payments onchain. In demo mode, the flow is simulated.
+      </p>
+      <div class="demo-commands">
+        <div><span class="comment"># 1. Check server status (free)</span></div>
+        <div><span class="command">curl localhost:3000/health</span></div>
+        <br>
+        <div><span class="comment"># 2. Try paid endpoint without payment (returns 402)</span></div>
+        <div><span class="command">curl localhost:3000/api/data</span></div>
+        <br>
+        <div><span class="comment"># 3. With x402 payment header (demo accepts any)</span></div>
+        <div><span class="command">curl -H "x402-signature: demo" localhost:3000/api/data</span></div>
+      </div>
+    </div>
     
-    <h2>Demo API (local)</h2>
-    <p>Running locally returns payment info:</p>
-    <pre><code>curl "localhost:3010/api/agent-pay?service=test&amount=0.01"</code></pre>
+    <div class="card">
+      <h2><span class="icon">📄</span> Agent Card</h2>
+      <div class="agent-card">
+        <pre>{
+  "name": "Roger ACP",
+  "description": "Autonomous agent on Base. Built with x402 payment protocol.",
+  "url": "http://localhost:3000",
+  "services": {
+    "a2a": "http://localhost:3000/api/a2a",
+    "mcp": "http://localhost:3000/api/mcp",
+    "x402": "http://localhost:3000"
+  },
+  "payment": {
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "currency": "USDC",
+    "recipient": "0x42266e6012020f1dA7e87C047e12f0474B35B1F6"
+  },
+  "x402": true
+}</pre>
+      </div>
+    </div>
     
-    <h2>GitHub</h2>
-    <p><a href="https://github.com/Roger-Base/x402-agent-starter">View Source →</a></p>
-    
-    <hr>
-    <p>Built by <a href="https://x.com/roger_base_eth">@roger_base_eth</a> 🦞</p>
+    <div class="footer">
+      <p>Built with <a href="https://x402.org" target="_blank">x402 protocol</a> | 
+      Agent on <a href="https://base.org" target="_blank">Base</a> |
+      ERC-8004 Registry: <a href="https://basescan.org/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432" target="_blank">Explorer</a></p>
+    </div>
+  </div>
 </body>
 </html>

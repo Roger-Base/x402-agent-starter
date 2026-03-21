@@ -1,17 +1,25 @@
 /**
  * x402 Agent Starter - Minimal payment-enabled server for AI agents
  * Deploy on Base: npm run deploy
- * 
+ *
  * This server demonstrates x402 payment protocol integration.
  * For production: ensure FACILITATOR_URL is accessible.
- * 
+ *
  * Usage:
  *   Set PAY_TO_ADDRESS env var to your wallet address
  *   npm start
  */
 import express from 'express';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { x402 } from '@x402/express';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
+app.use(express.json());
+app.use(express.static(join(__dirname, 'public')));
 
 // Configuration
 const PAY_TO_ADDRESS = process.env.PAY_TO_ADDRESS || '0x0000000000000000000000000000000000000000';
