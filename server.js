@@ -204,6 +204,37 @@ app.get('/health', (req, res) => {
   });
 });
 
+function buildDecayAnalysis(hist) {
+  if (hist.length < 2) return { status: 'insufficient_data', readings_needed: 50 - hist.length };
+  const rebalances = hist.map((r, i) => ({ ts: r.ts, gap: r.gap, signal: r.signal, i }))
+    .filter(r => r.signal === 'REBALANCE');
+  if (rebalances.length < 2) return { status: 'no_rebalance_events', rebalanceCount: rebalances.length };
+  // Compute inter-rebalance intervals (in readings, assuming ~1 reading per call)
+  const intervals = [];
+  for (let i = 1; i < rebalances.length; i++) {
+    intervals.push(rebalances[i].i - rebalances[i-1].i);
+  }
+  const avgInterval = intervals.reduce((a,b) => a+b, 0) / intervals.length;
+  const medianInterval = intervals[Math.floor(intervals.length/2)];
+  // Compute decay rate: how fast does gap trend toward 0.5%?
+  const gaps = hist.filter(r => r.gap !== null).map(r => r.gap);
+  const avgGap = gaps.reduce((a,b) => a+b, 0) / gaps.length;
+  const maxGap = Math.max(...gaps);
+  const decayRate = (maxGap - avgGap) / hist.length; // gap units per reading
+  return {
+    status: 'ok',
+    readingCount: hist.length,
+    rebalanceCount: rebalances.length,
+    avgGap,
+    maxGap,
+    decayRate: Math.round(decayRate * 10000) / 10000,
+    avgRebalanceInterval_readings: Math.round(avgInterval * 10) / 10,
+    medianRebalanceInterval_readings: medianInterval,
+    signalHalfLife: Math.round((0.5 * maxGap / (decayRate || 0.0001))),
+    interpretation: 'avgRebalanceInterval = avg readings between REBALANCE signals. decayRate = gap units lost per reading. signalHalfLife = readings until gap falls below 0.5% threshold.'
+  };
+}
+
 // x402 Discovery Document — /.well-known/x402 (compatibility spec)
 app.get('/.well-known/x402', (req, res) => {
   res.json({
@@ -294,6 +325,33 @@ app.all('/api/history', async (req, res) => {
     readingCount: hist.length,
     summary,
     readings: hist.slice(-24), // last 24 readings
+  });
+});
+
+// Decay analysis — estimates how fast the REBALANCE signal degrades
+app.all('/api/decay', async (req, res) => {
+  const hasProof = req.headers['x402-signature'];
+  const config = paymentConfig['GET /api/history'];
+  if (!hasProof) {
+    res.setHeader('x-payment-required', 'yes');
+    res.setHeader('x402-pay-to', PAY_TO_ADDRESS);
+    res.setHeader('x402-network', NETWORK);
+    res.status(402).json({
+      error: 'Payment Required',
+      required: { amount: '$0.10 USDC', network: NETWORK, scheme: 'exact', maxTimeoutSeconds: 60 }
+    });
+    return;
+  }
+  const hist = readingsHistory.slice(-500);
+  const decay = buildDecayAnalysis(hist);
+  res.json({
+    paid: true,
+    timestamp: new Date().toISOString(),
+    agent: 'Roger Molty',
+    endpoint: 'Decay Analysis',
+    version: '1.0.0-decay',
+    ...decay,
+    note: 'Decay analysis improves with more historical readings. Best signal after 50+ readings (~7 days).',
   });
 });
 
