@@ -46,6 +46,22 @@ function fetchJSON(url) {
   });
 }
 
+import { readFileSync, writeFileSync, existsSync } from 'fs';
+const HISTORY_FILE = join(__dirname, 'yield-history.json');
+function loadHistory() {
+  try {
+    if (existsSync(HISTORY_FILE)) {
+      const raw = JSON.parse(readFileSync(HISTORY_FILE, 'utf8'));
+      return Array.isArray(raw) ? raw : [];
+    }
+  } catch { return []; }
+  return [];
+}
+function saveHistory(hist) {
+  try { writeFileSync(HISTORY_FILE, JSON.stringify(hist.slice(-500), null, 2)); } catch {}
+}
+const readingsHistory = loadHistory(); // persisted to disk
+
 async function getYieldData() {
   const result = {
     timestamp: new Date().toISOString(),
@@ -98,6 +114,13 @@ const paymentConfig = {
   'GET /api/data': {
     scheme: 'exact',
     price: '$0.01 USDC',
+    network: NETWORK,
+    payTo: PAY_TO_ADDRESS,
+    maxTimeoutSeconds: 60,
+  },
+  'GET /api/history': {
+    scheme: 'exact',
+    price: '$0.05 USDC',
     network: NETWORK,
     payTo: PAY_TO_ADDRESS,
     maxTimeoutSeconds: 60,
@@ -222,6 +245,9 @@ app.all('/api/data', async (req, res) => {
   // Signature present — return live yield data (async)
   try {
     const yieldData = await getYieldData();
+    const reading = { ts: yieldData.timestamp, aaveAPY: yieldData.aaveAPY, morphoAPY: yieldData.morphoAPY, gap: yieldData.gap, signal: yieldData.signal };
+    readingsHistory.push(reading);
+    saveHistory(readingsHistory);
     res.json({
       paid: true,
       timestamp: new Date().toISOString(),
@@ -233,6 +259,42 @@ app.all('/api/data', async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: 'yield data unavailable', detail: e.message });
   }
+});
+
+// History endpoint — returns last 7 days of gap readings
+app.all('/api/history', async (req, res) => {
+  const hasProof = req.headers['x402-signature'];
+  const config = paymentConfig['GET /api/data'];
+  if (!hasProof) {
+    res.setHeader('x-payment-required', 'yes');
+    res.setHeader('x402-pay-to', PAY_TO_ADDRESS);
+    res.setHeader('x402-network', NETWORK);
+    res.status(402).json({
+      error: 'Payment Required',
+      required: { amount: '$0.05 USDC', network: NETWORK, scheme: 'exact', maxTimeoutSeconds: config.maxTimeoutSeconds }
+    });
+    return;
+  }
+  const hist = readingsHistory.slice(-168); // last 168 readings (~7 days at 1/reading per call)
+  const summary = hist.length > 0 ? {
+    readings: hist.length,
+    avgGap: Math.round(hist.reduce((a, r) => a + (r.gap || 0), 0) / hist.length * 100) / 100,
+    rebalanceCount: hist.filter(r => r.signal === 'REBALANCE').length,
+    holdCount: hist.filter(r => r.signal === 'HOLD').length,
+    latest: hist[hist.length - 1],
+    oldest: hist[0],
+  } : null;
+  res.json({
+    paid: true,
+    timestamp: new Date().toISOString(),
+    agent: 'Roger Molty',
+    endpoint: 'Yield History',
+    version: '1.0.0-history',
+    days: Math.round(hist.length / 24),
+    readingCount: hist.length,
+    summary,
+    readings: hist.slice(-24), // last 24 readings
+  });
 });
 
 const PORT = process.env.PORT || 3000;
