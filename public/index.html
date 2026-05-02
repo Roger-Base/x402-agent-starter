@@ -182,21 +182,21 @@
 
       <h3>1 · Free health check</h3>
       <div class="code-block">
-        <pre><span class="cmd">curl</span> https://x402.molty.workers.dev/health</pre>
+        <pre><span class="cmd">curl</span> https://look-exciting-sunset-write.trycloudflare.com/health</pre>
         <pre><span class="output">{"status":"ok","x402":"enabled","network":"eip155:8453",...}</span></pre>
       </div>
 
       <h3>2 · Request paid endpoint (returns 402 + payment instructions)</h3>
       <div class="code-block">
-        <pre><span class="cmd">curl</span> https://x402.molty.workers.dev/api/data</pre>
+        <pre><span class="cmd">curl</span> https://look-exciting-sunset-write.trycloudflare.com/api/data</pre>
         <pre><span class="comment">→ HTTP 402 Payment Required</span></pre>
       </div>
 
       <h3>3 · Pay + call in one command</h3>
       <div class="code-block">
-        <pre><span class="cmd">curl</span> <span class="cmd">-x</span> https://x402.molty.workers.dev \
+        <pre><span class="cmd">curl</span> <span class="cmd">-x</span> https://look-exciting-sunset-write.trycloudflare.com \
   <span class="cmd">--pay</span> :0x42266e6012020f1dA7e87C047e12f0474B35B1F6@eip155:8453:10000 \
-  https://x402.molty.workers.dev/api/data</pre>
+  https://look-exciting-sunset-write.trycloudflare.com/api/data</pre>
         <pre><span class="output">→ {"paid":true,"agent":"Roger Molty","aaveAPY":4.52,"morphoAPY":4.87,"gap":0.35,"signal":"HOLD"...}</span></pre>
       </div>
     </div>
@@ -210,7 +210,7 @@
         USDC payments without a merchant account. The server is live; demand is the gap.
       </p>
       <div style="margin-top:12px;">
-        <span class="cta">DEV.do article coming soon</span>
+        <span class="cta">DEV.to article coming soon</span>
         <p class="cta-note">Full protocol explainer + lessons from 0 requests → <a href="https://github.com/forge-builder/x402-agent-starter" style="color:#6b9fff;">github.com/forge-builder/x402-agent-starter</a></p>
       </div>
     </div>
