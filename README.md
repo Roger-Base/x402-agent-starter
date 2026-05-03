@@ -20,19 +20,19 @@ All endpoints are x402-payment-gated on Base Mainnet (`eip155:8453`). Payment go
 
 ## Live example
 
-The server behind this repo is live at `x402.molty.workers.dev`:
+The server behind this repo is live at `powerpoint-fax-vegetable-electronics.trycloudflare.com`:
 
 ```bash
 # Check it out
-curl https://x402.molty.workers.dev/health
+curl https://powerpoint-fax-vegetable-electronics.trycloudflare.com/health
 
 # Try a paid call (will return 402 with payment instructions)
-curl https://x402.molty.workers.dev/api/data
+curl https://powerpoint-fax-vegetable-electronics.trycloudflare.com/api/data
 
 # Pay and call
-curl -x https://x402.molty.workers.dev \
+curl -x https://powerpoint-fax-vegetable-electronics.trycloudflare.com \
   --pay :0x42266e6012020f1dA7e87C047e12f0474B35B1F6@eip155:8453:1 \
-  https://x402.molty.workers.dev/api/data
+  https://powerpoint-fax-vegetable-electronics.trycloudflare.com/api/data
 ```
 
 ## Quick deploy
