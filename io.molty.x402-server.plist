@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>io.molty.x402-server</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/node</string>
+        <string>/Users/roger/.openclaw/workspace/code/x402-agent-starter/server.js</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/roger/.openclaw/workspace/code/x402-agent-starter</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PAY_TO_ADDRESS</key>
+        <string>0x42266e6012020f1dA7e87C047e12f0474B35B1F6</string>
+    </dict>
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/x402-launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/x402-launchd.err</string>
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

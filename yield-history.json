@@ -1,0 +1,16 @@
+[
+  {
+    "ts": "2026-04-30T12:19:34.719Z",
+    "aaveAPY": 3.38,
+    "morphoAPY": 4.05,
+    "gap": 0.67,
+    "signal": "REBALANCE"
+  },
+  {
+    "ts": "2026-05-01T19:08:10.402Z",
+    "aaveAPY": 3.31,
+    "morphoAPY": 4.13,
+    "gap": 0.82,
+    "signal": "REBALANCE"
+  }
+]
