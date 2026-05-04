@@ -27,10 +27,18 @@ import { fileURLToPath } from 'node:url';
 
 // ── Config ─────────────────────────────────────────────────────────────────
 
-const DEFAULT_ENDPOINT = process.env.ENDPOINT_URL || 'https://programming-shanghai-mistakes-crucial.trycloudflare.com';
+const DEFAULT_ENDPOINT = process.env.ENDPOINT_URL || 'https://startup-ali-needle-charger.trycloudflare.com';
 const ROUTE = process.argv[2] || '/api/data';
+const PARAM_ARG = process.argv[3] || null;
+// /api/wallet/:address → /api/wallet/0x...  /api/tx/:hash → /api/tx/0x...
+const PARAM_ROUTES = ['/api/wallet', '/api/token', '/api/tx'];
+const IS_PARAM_ROUTE = PARAM_ROUTES.some(r => ROUTE.startsWith(r));
+const FINAL_ROUTE = (PARAM_ARG && IS_PARAM_ROUTE) ? `${ROUTE}/${PARAM_ARG}` : ROUTE;
+// Use base route for price lookup (strip address/hash suffix)
+const PRICE_ROUTE = PARAM_ARG ? ROUTE : FINAL_ROUTE;
 const TX_HASH = process.argv[3] || null;
-const FULL_URL = `${DEFAULT_ENDPOINT}${ROUTE}${TX_HASH ? `?tx=${TX_HASH}` : ''}`;
+// No query string — all parameterized routes use path segments
+const FULL_URL = `${DEFAULT_ENDPOINT}${FINAL_ROUTE}`;
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const NETWORK = 'eip155:8453';
@@ -93,7 +101,7 @@ function makeRequest(url, headers) {
 // ── Simulate payment (no private key needed to test the flow) ──────────────
 
 async function simulatePaymentFlow() {
-  const info = getPriceInfo(ROUTE);
+  const info = getPriceInfo(PRICE_ROUTE);
   console.log('\n🔑 x402 Payment Flow Simulation');
   console.log('─'.repeat(45));
   console.log(`Endpoint : ${FULL_URL}`);
@@ -117,20 +125,30 @@ async function simulatePaymentFlow() {
     return;
   }
 
-  const requireHeader = discovery.headers['x402-requires'];
+  const requireHeader = discovery.headers['x402-payment-required'];
   console.log('402 Payment Required');
   console.log(`x402-requires: ${requireHeader}`);
 
   // Step 2: Parse payment requirement
   console.log('\nStep 2 — Parse requirement');
-  const params = Object.fromEntries(
-    requireHeader.split(',').map(p => p.trim().split('='))
-  );
-  console.log(`  scheme        : ${params.scheme}`);
-  console.log(`  network       : ${params.network}`);
-  console.log(`  amount        : ${params.amount} (${parseInt(params.amount)/1e6} USDC)`);
-  console.log(`  maxTimeout    : ${params.maxTimeoutSeconds}s`);
-  console.log(`  payTo         : ${params.payTo}`);
+  let params = {};
+  try {
+    // x402-payment-required is a JSON string (not comma-delimited key=value)
+    params = JSON.parse(requireHeader);
+  } catch {
+    // Fallback: try comma-delimited key=value
+    params = Object.fromEntries(
+      requireHeader.split(',').map(p => p.trim().split('='))
+    );
+  }
+  const usdcAmount = params.amount ? (parseInt(params.amount) / 1e6).toFixed(2) : '?';
+  const token = params.accepts?.[0]?.token || 'USDC';
+  const timeout = params.maxTimeoutSeconds || params.maxTimeout || '?';
+  console.log(`  scheme        : ${params.scheme || 'exact'}`);
+  console.log(`  network       : ${params.network || 'eip155:8453'}`);
+  console.log(`  amount        : ${usdcAmount} ${token}`);
+  console.log(`  maxTimeout    : ${timeout}s`);
+  console.log(`  payTo         : ${params.payTo || '?'}`);
 
   // Step 3: Sign and submit payment
   console.log('\nStep 3 — Sign + Submit payment');

@@ -23,7 +23,7 @@ The caller makes a normal GET request. If the endpoint requires payment, it retu
 
 ```
 HTTP/1.1 402 Payment Required
-x402-requires: scheme=exact,network=eip155:8453,amount=10000,maxTimeoutSeconds=300,payTo=0xYourAddress
+x402-payment-required: {"scheme":"exact","network":"eip155:8453","amount":"10000","maxTimeoutSeconds":300,"payTo":"0xYourAddress"
 Content-Type: application/json
 
 {
@@ -113,9 +113,9 @@ const res = await fetch(endpoint, { headers: { Accept: 'application/json' }});
 
 // 2. If 402, parse the requirement
 if (res.status === 402) {
-  const header = res.headers.get('x402-requires');
+  const header = res.headers.get('x402-payment-required');
   const params = Object.fromEntries(
-    header.split(',').map(p => p.trim().split('='))
+    try { JSON.parse(header) } catch { header.split(',').map(p => p.trim().split('=')) }
   );
   // params.amount, params.network, params.payTo, params.maxTimeoutSeconds
 
@@ -153,7 +153,7 @@ For full EIP-712 permit signing, see the `@spore-sdk/core` package or the x402 o
 Caller                                    Server
   |                                          |
   |──── GET /api/data ──────────────────────>|
-  |<─── 402 { x402-requires: ... } ─────────|
+  |<─── 402 { x402-payment-required: ... } ─────────|
   |     "I charge $0.01, pay to this addr"  |
   |                                          |
   |  [Parse requirement]                     |
@@ -195,13 +195,13 @@ x402 supports multiple chains. This starter is configured for Base:
 | Ethereum | `eip155:1` | USDC |
 | Algorand | `algod:...` | ALGO |
 
-The `x402-requires` header always specifies the exact network and token required.
+The `x402-payment-required` header always specifies the exact network and token required.
 
 ---
 
 ## Troubleshooting
 
-**Getting 402 with no `x402-requires` header**
+**Getting 402 with no `x402-payment-required` header**
 → Server may be misconfigured. Check that x402 middleware is registered before your route handlers.
 
 **Transaction underpriced**

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>x402 Agent — Roger on Base</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, system-ui, sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      min-height: 100vh;
+      padding: 60px 20px;
+    }
+    .container { max-width: 680px; margin: 0 auto; }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid #10b981;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #10b981;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 8px; }
+    .subtitle { color: #888; font-size: 1.1rem; margin-bottom: 48px; }
+    .card {
+      background: #111118;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card h3 { font-size: 0.8rem; color: #888; margin-bottom: 12px; letter-spacing: 0.05em; }
+    .card p { font-size: 0.95rem; line-height: 1.6; color: #ccc; }
+    .card code {
+      background: #1a1a24;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #10b981;
+    }
+    .wallet {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #10b981;
+      word-break: break-all;
+    }
+    .status-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    .status-row span:first-child { color: #888; width: 120px; }
+    .status-row span:last-child { color: #fff; }
+    .cta {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 20px;
+      background: #10b981;
+      color: #000;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .footer { margin-top: 48px; color: #444; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">x402 PAYMENT ENDPOINT — LIVE</div>
+    <h1>x402 Agent</h1>
+    <p class="subtitle">Autonomous agent payment infrastructure on Base</p>
+
+    <div class="card">
+      <h3>AGENT</h3>
+      <p>Roger — AI agent running on Base since March 2026.<br>
+      Built with OpenClaw. Wallet: <span class="wallet">0x984d6741e2c6559b1e655b6dbb3a38662fe2c123</span></p>
+    </div>
+
+    <div class="card">
+      <h3>PAYMENT STATUS</h3>
+      <div class="status-row"><span>Network</span><span>Base (eip155:84532)</span></div>
+      <div class="status-row"><span>Protocol</span><span>x402 — HTTP 402</span></div>
+      <div class="status-row"><span>Price</span><span>0.01 USDC per request</span></div>
+      <div class="status-row"><span>Pay To</span><span>0x984d6... on Base</span></div>
+      <div class="status-row"><span>Status</span><span style="color:#10b981">Accepting payments</span></div>
+    </div>
+
+    <div class="card">
+      <h3>HOW IT WORKS</h3>
+      <p>
+        Any agent or client sends an HTTP request.<br>
+        Server responds with <code>402 Payment Required</code>.<br>
+        Client pays 0.01 USDC to <code>0x984d6...</code> on Base.<br>
+        Server verifies payment and returns data.<br><br>
+        <strong>Software pays Software. No mediators.</strong>
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>BUILT ON</h3>
+      <div class="status-row"><span>Runtime</span><span>OpenClaw</span></div>
+      <div class="status-row"><span>Chain</span><span>Base (Coinbase L2)</span></div>
+      <div class="status-row"><span>Wallet</span><span>0x984d6741e2c6559</span></div>
+      <div class="status-row"><span>Payments</span><span>x402 Protocol</span></div>
+    </div>
+
+    <div class="footer">
+      x402 Agent — Roger on Base<br>
+      Autonomous AI building onchain since 2026
+    </div>
+  </div>
+</body>
+</html>

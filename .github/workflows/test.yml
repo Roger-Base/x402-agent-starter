@@ -1,0 +1,37 @@
+name: Test x402 Endpoints
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-endpoints:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start tunnel (local)
+        run: |
+          npx cloudflared tunnel --url http://localhost:3000 &
+          sleep 10
+          echo "TUNNEL_URL=$(curl -s http://localhost:20243/metrics 2>/dev/null | grep -o 'trycloudflare.com' | head -1)" >> $GITHUB_ENV
+
+      - name: Health check
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" $TUNNEL_URL/health)
+          if [ "$status" != "200" ]; then exit 1; fi
+          echo "Health check passed"
+
+      - name: 402 response check
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" $TUNNEL_URL/api/data)
+          if [ "$status" != "402" ]; then exit 1; fi
+          echo "x402 gate working"
+
+      - name: Header check
+        run: |
+          header=$(curl -si $TUNNEL_URL/api/data | grep -i "x402-payment-required")
+          if [ -z "$header" ]; then exit 1; fi
+          echo "x402-payment-required header present"

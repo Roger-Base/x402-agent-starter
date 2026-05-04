@@ -1,0 +1,46 @@
+name: Deploy x402 Agent Starter
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Deploy to Render
+        if: github.event.inputs.environment == 'production'
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          PAY_TO_ADDRESS: ${{ secrets.PAY_TO_ADDRESS }}
+        run: |
+          # Render deployment via CLI would go here
+          # For now, this sets up the workflow structure
+          echo "Configure RENDER_API_KEY in repo secrets"
+          echo "Then add: railway up or render-cli deploy"
+
+      - name: Deploy to Vercel
+        if: github.event.inputs.environment == 'staging'
+        run: |
+          # Add Vercel deployment step
+          echo "Configure VERCEL_TOKEN in repo secrets"

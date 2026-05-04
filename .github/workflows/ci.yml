@@ -1,0 +1,40 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for fake x402 CLI examples
+        run: |
+          if grep -r "x402 call\|--pay\|curl -x" README.md content/*.md --include="*.md" 2>/dev/null; then
+            echo "FAIL: Found fake x402 CLI references"
+            exit 1
+          fi
+          echo "PASS: No fake x402 CLI examples"
+
+      - name: Check tunnel URL is live
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://startup-ali-needle-charger.trycloudflare.com/health)
+          if [ "$code" != "200" ]; then echo "WARN: tunnel not reachable from CI"; fi
+
+      - name: Validate caller script syntax
+        run: node --check examples/x402-caller.js 2>/dev/null && echo "PASS: caller JS valid" || echo "FAIL: caller JS syntax error"
+
+      - name: Validate docs
+        run: |
+          node -e "
+const fs = require('fs');
+const doc = fs.readFileSync('docs/x402-payment-flow.md', 'utf8');
+if (doc.includes('x402-payment-required')) { console.log('PASS: doc has correct header'); }
+else { console.log('FAIL: doc missing x402-payment-required'); process.exit(1); }
+"

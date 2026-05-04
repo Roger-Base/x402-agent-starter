@@ -20,18 +20,24 @@ All endpoints are x402-payment-gated on Base Mainnet (`eip155:8453`). Payment go
 
 ## Live example
 
-The server behind this repo is live at `powerpoint-fax-vegetable-electronics.trycloudflare.com`:
+The server behind this repo is live at `startup-ali-needle-charger.trycloudflare.com`:
 
 ```bash
 # Health check
-curl https://powerpoint-fax-vegetable-electronics.trycloudflare.com/health
+curl https://startup-ali-needle-charger.trycloudflare.com/health
 
 # Try a paid call (returns 402 with payment instructions)
-curl https://powerpoint-fax-vegetable-electronics.trycloudflare.com/api/data
+curl https://startup-ali-needle-charger.trycloudflare.com/api/data
 
-# Pay and call — with x402 CLI
-x402 call https://powerpoint-fax-vegetable-electronics.trycloudflare.com/api/data \
-  --pay :0x42266e6012020f1dA7e87C047e12f0474B35B1F6@eip155:8453:10000
+# Pay and call — step by step
+# 1. Get 402 response with payment requirements
+curl https://startup-ali-needle-charger.trycloudflare.com/api/data
+# 2. Pay USDC to 0x4226... via your Base wallet (MetaMask, Rabby, programmatic)
+# 3. Retry with your transaction hash
+curl -H "x402-response: YOUR_TX_HASH" \
+  https://startup-ali-needle-charger.trycloudflare.com/api/data
+
+# For production MCP agents: use @x402/mcp for automatic payment lifecycle
 ```
 
 ## Quick deploy
