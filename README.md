@@ -76,6 +76,30 @@ See `docs/x402-payment-flow.md` for the complete technical reference: two-step f
 - **RPC:** `https://mainnet.base.org`
 - **Persistence:** `yield-history.json` for historical data
 
+
+```mermaid
+sequenceDiagram
+    participant Agent as AI Agent
+    participant MCP as @x402/mcp Client
+    participant Server as x402 Server
+    participant Blockchain as Base (USDC)
+    participant Facilitator as x402 Facilitator
+
+    Agent->>MCP: callTool("x402_data")
+    MCP->>Server: GET /api/data
+    Server-->>MCP: 402 Payment Required
+    MCP->>Agent: payment required
+    Agent->>MCP: approve(payment)
+    MCP->>Blockchain: sign EIP-712 permit
+    Blockchain-->>MCP: permit signature
+    MCP->>Blockchain: submit tx (pay USDC)
+    Blockchain-->>MCP: tx hash
+    MCP->>Server: GET /api/data (x402-response: tx_hash)
+    Server->>Facilitator: settle payment
+    Server-->>MCP: 200 OK + data
+    MCP-->>Agent: tool result
+```
+
 ## Requirements
 
 - Node.js 18+
