@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  x402-server:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - PAY_TO_ADDRESS=0x42266e6012020f1dA7e87C047e12f0474B35B1F6
+      - TUNNEL_URL=https://startup-ali-needle-charger.trycloudflare.com
+    restart: unless-stopped
