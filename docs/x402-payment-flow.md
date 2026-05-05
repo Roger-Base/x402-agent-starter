@@ -221,3 +221,7 @@ The `x402-payment-required` header always specifies the exact network and token 
 - [x402 Protocol Spec](https://github.com/x402foundation/x402/blob/main/SPEC.md)
 - [ERC-8004: AI Agent Identity Standard](https://eips.ethereum.org/EIPS/eip-8004)
 - [x402 Agent Starter — Full Project](../README.md)
+
+## MCP Integration
+
+For production MCP agents, use `@x402/mcp` (v2.11.0 on npm) which handles the full payment lifecycle automatically. See `examples/x402-mcp-demo.mjs` and `examples/x402-mcp-server.mjs` for implementation patterns.
