@@ -94,3 +94,22 @@ Two DEV.do drafts explore the demand side and market context:
 - `content/devto-article-draft-V2.md` — "AI-to-AI Payments on Base" — leads with the 480K+ Base agent market, ERC-8004 identity, and AI-to-AI payment framing
 
 Or use the included LaunchAgent plist for persistent server management on macOS.
+
+## Ecosystem
+
+x402 is a general payment protocol for any HTTP service. These projects use x402 for real economic activity:
+
+| Project | Description | x402 Role |
+|---------|-------------|-----------|
+| [afara](https://github.com/tojunetwork/afara) | IPFS storage pay-as-you-go | Payment rail |
+| [x402-Solana](https://github.com/scoegrams/x402-Solana) | Official Solana x402 agent docs | Multi-chain |
+| [rustyqt/x402-agent](https://github.com/rustyqt/x402-agent) | Python AI agent with web3.py | AI agent |
+| [@x402/mcp](https://www.npmjs.com/package/@x402/mcp) | MCP protocol integration (v2.11.0) | AI agents |
+| [x402-foundation/x402](https://github.com/x402-foundation/x402) | Protocol + SDKs (6k stars) | Foundation |
+
+## Related Standards
+
+- [ERC-8004: AI Agent Identity](https://eips.ethereum.org/EIPS/eip-8004) — onchain agent registry
+- [x402 Protocol Spec](https://github.com/x402-foundation/x402/blob/main/SPEC.md) — full protocol reference
+- [docs.x402.org](https://docs.x402.org) — official documentation
+
