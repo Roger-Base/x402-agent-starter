@@ -24,7 +24,7 @@ jobs:
 
       - name: Check tunnel URL is live
         run: |
-          code=$(curl -s -o /dev/null -w "%{http_code}" https://controlling-coal-throw-between.trycloudflare.com/health)
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://laid-special-stroke-automobiles.trycloudflare.com/health)
           if [ "$code" != "200" ]; then echo "WARN: tunnel not reachable from CI"; fi
 
       - name: Validate caller script syntax

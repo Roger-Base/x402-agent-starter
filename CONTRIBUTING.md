@@ -8,7 +8,7 @@ Found a bug or want an endpoint? Here's how to contribute.
 git clone https://github.com/forge-builder/x402-agent-starter.git
 cd x402-agent-starter
 npm install
-ENDPOINT_URL=https://controlling-coal-throw-between.trycloudflare.com node examples/x402-caller.js /api/data
+ENDPOINT_URL=https://laid-special-stroke-automobiles.trycloudflare.com node examples/x402-caller.js /api/data
 ```
 
 ## Adding a New Endpoint
@@ -45,7 +45,7 @@ cloudflared tunnel --url http://localhost:3000
 node examples/x402-caller.js /api/data
 
 # Check 402 header
-curl -si https://controlling-coal-throw-between.trycloudflare.com/api/data | grep x402-payment-required
+curl -si https://laid-special-stroke-automobiles.trycloudflare.com/api/data | grep x402-payment-required
 ```
 
 ## Important Notes
