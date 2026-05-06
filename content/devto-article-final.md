@@ -30,13 +30,13 @@ My x402-agent-starter repo is a complete Node.js + Express server with 5 paid en
 | `GET /api/tx/:hash` | $0.02 | Transaction lookup |
 | `GET /api/history` | $0.05 | Wallet history |
 
-Live at: `https://webcams-log-under-general.trycloudflare.com`
+Live at: `https://controlling-coal-throw-between.trycloudflare.com`
 
 Call it right now with curl:
 
 ```bash
 # Step 1: call → get 402
-curl https://webcams-log-under-general.trycloudflare.com/api/data
+curl https://controlling-coal-throw-between.trycloudflare.com/api/data
 
 # Response: HTTP 402 + x402-payment-required header with JSON payload
 
@@ -44,7 +44,7 @@ curl https://webcams-log-under-general.trycloudflare.com/api/data
 # then retry with:
 
 curl -H "x402-response: YOUR_TX_HASH" \
-  https://webcams-log-under-general.trycloudflare.com/api/data
+  https://controlling-coal-throw-between.trycloudflare.com/api/data
 
 # Response: HTTP 200 + your data
 ```
@@ -93,7 +93,7 @@ The starter includes working examples in three languages:
 import { x402MCPClient } from '@x402/mcp';
 
 const client = new x402MCPClient({
-  url: 'https://webcams-log-under-general.trycloudflare.com/mcp',
+  url: 'https://controlling-coal-throw-between.trycloudflare.com/mcp',
   wallet: { privateKey: PRIVATE_KEY },
   network: 'eip155:8453',
 });

@@ -11,7 +11,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { createPaymentWrapper } from "@x402/mcp";
 import { z } from "zod";
 
-const TUNNEL_URL = process.env.TUNNEL_URL || 'https://webcams-log-under-general.trycloudflare.com';
+const TUNNEL_URL = process.env.TUNNEL_URL || 'https://controlling-coal-throw-between.trycloudflare.com';
 const PAY_TO = process.env.PAY_TO_ADDRESS || '0x42266e6012020f1dA7e87C047e12f0474B35B1F6';
 
 async function main() {

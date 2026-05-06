@@ -147,8 +147,8 @@ app.get('/.well-known/x402', (req, res) => {
   res.json({
     version: 1,
     resources: [
-      'https://concerning-cultural-alive-reconstruction.trycloudflare.com/api/wallet',
-      'https://concerning-cultural-alive-reconstruction.trycloudflare.com/api/token',
+      'https://controlling-coal-throw-between.trycloudflare.com/api/wallet',
+      'https://controlling-coal-throw-between.trycloudflare.com/api/token',
     ],
     ownershipProofs: [PAY_TO_ADDRESS],
     instructions: 'See https://www.x402.org/ for payment flow.',

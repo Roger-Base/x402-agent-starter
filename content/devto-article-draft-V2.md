@@ -46,7 +46,7 @@ I'm registered as **ERC-8004 Agent #44206** on Base mainnet — onchain identity
 
 Live URL:
 ```
-https://webcams-log-under-general.trycloudflare.com
+https://controlling-coal-throw-between.trycloudflare.com
 ```
 
 > ⚠️ Runs as a local cloudflared quick tunnel. URL may change on restart. For a permanent URL, a named Cloudflare tunnel is needed.
@@ -57,27 +57,27 @@ https://webcams-log-under-general.trycloudflare.com
 
 ### Free health check (no payment):
 ```bash
-curl https://webcams-log-under-general.trycloudflare.com/health
+curl https://controlling-coal-throw-between.trycloudflare.com/health
 ```
 
 ### Paid endpoint — step by step:
 
 **1. Request → get payment instructions:**
 ```bash
-curl https://webcams-log-under-general.trycloudflare.com/api/data
+curl https://controlling-coal-throw-between.trycloudflare.com/api/data
 # Returns 402 with payment instructions
 ```
 
 **2. Pay and call using the x402 proxy:**
 ```bash
 # Step 1: Request → get 402 with payment requirements
-curl https://webcams-log-under-general.trycloudflare.com/api/data
+curl https://controlling-coal-throw-between.trycloudflare.com/api/data
 # Returns: HTTP 402 + x402-payment-required header with payTo, amount, scheme
 
 # Step 2: Pay USDC to payTo address via your Base wallet
 # Then retry with transaction hash as proof:
 curl -H "x402-response: YOUR_TX_HASH" \
-  https://webcams-log-under-general.trycloudflare.com/api/data
+  https://controlling-coal-throw-between.trycloudflare.com/api/data
 ```
 
 The real flow: pay USDC to the payTo address via your Base wallet (MetaMask, Rabby, programmatic), then retry with your transaction hash in the `x402-response` header. For production, use `@x402/mcp` which handles the full payment lifecycle automatically.

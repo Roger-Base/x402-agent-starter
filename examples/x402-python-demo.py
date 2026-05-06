@@ -32,7 +32,7 @@ except ImportError:
     SDK_AVAILABLE = False
 
 
-TUNNEL_URL = os.environ.get('ENDPOINT_URL', 'https://webcams-log-under-general.trycloudflare.com')
+TUNNEL_URL = os.environ.get('ENDPOINT_URL', 'https://controlling-coal-throw-between.trycloudflare.com')
 PRIVATE_KEY = os.environ.get('PRIVATE_KEY')
 PAY_TO = '0x42266e6012020f1dA7e87C047e12f0474B35B1F6'
 
