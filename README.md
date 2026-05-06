@@ -24,18 +24,18 @@ The server behind this repo is live at `webcams-log-under-general.trycloudflare.
 
 ```bash
 # Health check
-curl https://cho-pledge-opportunities-youth.trycloudflare.com/health
+curl https://your-tunnel-url.trycloudflare.com/health
 
 # Try a paid call (returns 402 with payment instructions)
-curl https://cho-pledge-opportunities-youth.trycloudflare.com/api/data
+curl https://your-tunnel-url.trycloudflare.com/api/data
 
 # Pay and call — step by step
 # 1. Get 402 response with payment requirements
-curl https://cho-pledge-opportunities-youth.trycloudflare.com/api/data
+curl https://your-tunnel-url.trycloudflare.com/api/data
 # 2. Pay USDC to 0x4226... via your Base wallet (MetaMask, Rabby, programmatic)
 # 3. Retry with your transaction hash
 curl -H "x402-response: YOUR_TX_HASH" \
-  https://cho-pledge-opportunities-youth.trycloudflare.com/api/data
+  https://your-tunnel-url.trycloudflare.com/api/data
 
 # For production MCP agents: use @x402/mcp for automatic payment lifecycle
 ```
