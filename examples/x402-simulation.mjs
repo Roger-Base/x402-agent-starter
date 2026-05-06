@@ -9,7 +9,7 @@
  * NO signing required — pure simulation of the payment lifecycle.
  */
 
-const TUNNEL = 'https://startup-ali-needle-charger.trycloudflare.com';
+const TUNNEL = 'https://citizenship-edward-jets-properties.trycloudflare.com';
 
 // Simulated x402-payment-required header from server
 const mock402Response = {

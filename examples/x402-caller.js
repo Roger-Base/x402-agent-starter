@@ -27,7 +27,7 @@ import { fileURLToPath } from 'node:url';
 
 // ── Config ─────────────────────────────────────────────────────────────────
 
-const DEFAULT_ENDPOINT = process.env.ENDPOINT_URL || 'https://startup-ali-needle-charger.trycloudflare.com';
+const DEFAULT_ENDPOINT = process.env.ENDPOINT_URL || 'https://citizenship-edward-jets-properties.trycloudflare.com';
 const ROUTE = process.argv[2] || '/api/data';
 const PARAM_ARG = process.argv[3] || null;
 // /api/wallet/:address → /api/wallet/0x...  /api/tx/:hash → /api/tx/0x...

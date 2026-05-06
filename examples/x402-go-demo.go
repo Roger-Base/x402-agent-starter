@@ -26,7 +26,7 @@ import (
 )
 
 const (
-	tunnelURL = "https://startup-ali-needle-charger.trycloudflare.com"
+	tunnelURL = "https://citizenship-edward-jets-properties.trycloudflare.com"
 	payTo     = "0x42266e6012020f1dA7e87C047e12f0474B35B1F6"
 )
 
