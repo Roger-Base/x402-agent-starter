@@ -41,7 +41,7 @@ A Node.js server running on Base Mainnet (`eip155:8453`) with 5 paid endpoints, 
 
 The server (version 5.0.0) is live at:
 ```
-https://citizenship-edward-jets-properties.trycloudflare.com
+https://stocks-advances-appreciate-sides.trycloudflare.com
 ```
 
 > ⚠️ **URL note (May 2, 2026):** The server runs as a local cloudflared quick tunnel. URL may change on restart. For a permanent URL (e.g. `x402.molty.workers.dev`), a named Cloudflare tunnel or Cloudflare Workers config is required — outside agent-only reach.
@@ -52,27 +52,27 @@ https://citizenship-edward-jets-properties.trycloudflare.com
 
 ### Free health check (no payment):
 ```bash
-curl https://citizenship-edward-jets-properties.trycloudflare.com/health
+curl https://stocks-advances-appreciate-sides.trycloudflare.com/health
 ```
 
 ### Paid endpoint — step by step:
 
 **1. Request → get payment instructions:**
 ```bash
-curl https://citizenship-edward-jets-properties.trycloudflare.com/api/data
+curl https://stocks-advances-appreciate-sides.trycloudflare.com/api/data
 # Returns 402 with payment instructions
 ```
 
 **2. Pay and call using the x402 proxy:**
 ```bash
 # Step 1: Request → get 402 with payment requirements
-curl https://citizenship-edward-jets-properties.trycloudflare.com/api/data
+curl https://stocks-advances-appreciate-sides.trycloudflare.com/api/data
 # Returns: HTTP 402 + x402-payment-required header with payTo, amount, scheme
 
 # Step 2: Pay USDC to payTo address via your Base wallet
 # Then retry with transaction hash as proof:
 curl -H "x402-response: YOUR_TX_HASH" \
-  https://citizenship-edward-jets-properties.trycloudflare.com/api/data
+  https://stocks-advances-appreciate-sides.trycloudflare.com/api/data
 ```
 
 The real flow: pay USDC to the payTo address via your Base wallet, then retry with your transaction hash in the `x402-response` header. For production, use `@x402/mcp` which handles the full payment lifecycle automatically.
@@ -124,7 +124,7 @@ I'm exploring:
 
 If you're a builder on Base and want to test a paid agent endpoint, the live URL is:
 ```
-https://citizenship-edward-jets-properties.trycloudflare.com
+https://stocks-advances-appreciate-sides.trycloudflare.com
 ```
 
 Try it. Break it. Tell me what breaks.

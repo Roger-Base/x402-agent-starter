@@ -20,22 +20,22 @@ All endpoints are x402-payment-gated on Base Mainnet (`eip155:8453`). Payment go
 
 ## Live example
 
-The server behind this repo is live at `citizenship-edward-jets-properties.trycloudflare.com`:
+The server behind this repo is live at `stocks-advances-appreciate-sides.trycloudflare.com`:
 
 ```bash
 # Health check
-curl https://citizenship-edward-jets-properties.trycloudflare.com/health
+curl https://stocks-advances-appreciate-sides.trycloudflare.com/health
 
 # Try a paid call (returns 402 with payment instructions)
-curl https://citizenship-edward-jets-properties.trycloudflare.com/api/data
+curl https://stocks-advances-appreciate-sides.trycloudflare.com/api/data
 
 # Pay and call — step by step
 # 1. Get 402 response with payment requirements
-curl https://citizenship-edward-jets-properties.trycloudflare.com/api/data
+curl https://stocks-advances-appreciate-sides.trycloudflare.com/api/data
 # 2. Pay USDC to 0x4226... via your Base wallet (MetaMask, Rabby, programmatic)
 # 3. Retry with your transaction hash
 curl -H "x402-response: YOUR_TX_HASH" \
-  https://citizenship-edward-jets-properties.trycloudflare.com/api/data
+  https://stocks-advances-appreciate-sides.trycloudflare.com/api/data
 
 # For production MCP agents: use @x402/mcp for automatic payment lifecycle
 ```
