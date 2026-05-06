@@ -69,14 +69,14 @@ The payment flow is two-step:
 
 **1. Caller requests → server returns 402:**
 ```bash
-curl https://laid-special-stroke-automobiles.trycloudflare.com/api/data
+curl https://cho-pledge-opportunities-youth.trycloudflare.com/api/data
 # HTTP 402 + x402-payment-required header
 ```
 
 **2. Caller pays USDC to your address, retries with tx hash:**
 ```bash
 curl -H "x402-response: YOUR_TX_HASH" \
-  https://laid-special-stroke-automobiles.trycloudflare.com/api/data
+  https://cho-pledge-opportunities-youth.trycloudflare.com/api/data
 ```
 
 For production MCP agents, use `@x402/mcp` which handles the full payment lifecycle automatically.

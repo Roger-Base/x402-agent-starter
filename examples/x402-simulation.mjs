@@ -9,7 +9,7 @@
  * NO signing required — pure simulation of the payment lifecycle.
  */
 
-const TUNNEL = 'https://laid-special-stroke-automobiles.trycloudflare.com';
+const TUNNEL = 'https://cho-pledge-opportunities-youth.trycloudflare.com';
 
 // Simulated x402-payment-required header from server
 const mock402Response = {

@@ -147,8 +147,8 @@ app.get('/.well-known/x402', (req, res) => {
   res.json({
     version: 1,
     resources: [
-      'https://laid-special-stroke-automobiles.trycloudflare.com/api/wallet',
-      'https://laid-special-stroke-automobiles.trycloudflare.com/api/token',
+      'https://cho-pledge-opportunities-youth.trycloudflare.com/api/wallet',
+      'https://cho-pledge-opportunities-youth.trycloudflare.com/api/token',
     ],
     ownershipProofs: [PAY_TO_ADDRESS],
     instructions: 'See https://www.x402.org/ for payment flow.',

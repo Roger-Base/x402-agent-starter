@@ -240,7 +240,7 @@ app.get('/.well-known/x402', (req, res) => {
   res.json({
     version: 1,
     resources: [
-      'https://laid-special-stroke-automobiles.trycloudflare.com/api/data',
+      'https://cho-pledge-opportunities-youth.trycloudflare.com/api/data',
     ],
     ownershipProofs: ['0x42266e6012020f1dA7e87C047e12f0474B35B1F6'],
     instructions: 'See https://www.x402.org/ for payment flow.',

@@ -1,5 +1,5 @@
 #!/bin/bash
-TUNNEL="${ENDPOINT_URL:-https://laid-special-stroke-automobiles.trycloudflare.com}"
+TUNNEL="${ENDPOINT_URL:-https://cho-pledge-opportunities-youth.trycloudflare.com}"
 echo "Testing x402 endpoints at $TUNNEL"
 test_endpoint() {
   echo -n "GET $1 ... "

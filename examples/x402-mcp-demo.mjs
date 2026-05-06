@@ -9,7 +9,7 @@
 import { x402MCPClient } from '@x402/mcp';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const TUNNEL_URL = process.env.ENDPOINT_URL || 'https://laid-special-stroke-automobiles.trycloudflare.com';
+const TUNNEL_URL = process.env.ENDPOINT_URL || 'https://cho-pledge-opportunities-youth.trycloudflare.com';
 
 console.log('╔══════════════════════════════════════════════════╗');
 console.log('║   x402 MCP Client — AI Agent Tool Payment Demo  ║');
