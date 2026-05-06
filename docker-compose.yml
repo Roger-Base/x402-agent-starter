@@ -7,5 +7,5 @@ services:
     environment:
       - PORT=3000
       - PAY_TO_ADDRESS=0x42266e6012020f1dA7e87C047e12f0474B35B1F6
-      - TUNNEL_URL=https://stocks-advances-appreciate-sides.trycloudflare.com
+      - TUNNEL_URL=https://webcams-log-under-general.trycloudflare.com
     restart: unless-stopped

@@ -9,7 +9,7 @@
  * NO signing required — pure simulation of the payment lifecycle.
  */
 
-const TUNNEL = 'https://stocks-advances-appreciate-sides.trycloudflare.com';
+const TUNNEL = 'https://webcams-log-under-general.trycloudflare.com';
 
 // Simulated x402-payment-required header from server
 const mock402Response = {
